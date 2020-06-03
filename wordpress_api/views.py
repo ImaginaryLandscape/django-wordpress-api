@@ -14,6 +14,11 @@ try:
 except AttributeError:
     cache_time = 0
 
+try:
+    blog_per_page = settings.BLOG_POSTS_PER_PAGE
+except AttributeError:  # pragma: no cover
+    blog_per_page = 10
+
 
 class ParentBlogView(View):
     """
@@ -68,9 +73,19 @@ class ParentBlogView(View):
             messages.add_message(self.request, messages.ERROR,
                                  blogs['server_error'])
             raise Http404
-        if not blogs['body']:
-            raise Http404
         for blog in blogs['body']:
+            blog_categories = []
+            if 'categories' in blog:
+                for category in categories:
+                    if category['id'] in blog['categories']:
+                        blog_categories.append(category)
+            blog['category_list'] = blog_categories
+            blog_tags = []
+            if 'tags' in blog:
+                for tag in tags:
+                    if tag['id'] in blog['tags']:
+                        blog_tags.append(tag)
+            blog['tag_list'] = blog_tags
             blog['slug'] = str(blog['slug'])
             blog['bdate'] = iso8601.parse_date(blog['date']).date()
             featured_media = blog.get(
@@ -81,6 +96,7 @@ class ParentBlogView(View):
                 blog['featured_image'] = featured_media[0]
             if authors:
                 blog['authors'] = authors
+
         context = {
             'blogs': blogs['body'],
             'tags': tags,
@@ -91,6 +107,9 @@ class ParentBlogView(View):
             'current_page': page,
             'previous_page': page - 1,
             'next_page': page + 1,
+            'per_page': blog_per_page,
+            'end_index': page * blog_per_page,
+            'start_index': (page - 1) * blog_per_page + 1,
         }
         return context
 
@@ -115,12 +134,13 @@ class BlogListView(ParentBlogView):
     def get_context_data(self, **kwargs):
         api_kwargs = self.get_wp_api_kwargs(**kwargs)
         page = api_kwargs.get('page_number', 1)
+        search_term = api_kwargs.get('search', '').replace(' ','_')
         context = cache.get(
-            "blog_list_cache" + self.blog_language + "_page_" + str(page))
+            "blog_list_cache" + self.blog_language + "_page_" + str(page) + "_search_" + search_term)
         context = super(BlogListView, self).get_context_data(**kwargs) if\
             context is None else context
         cache.add(
-            "blog_list_cache" + self.blog_language + "_page_" + str(page),
+            "blog_list_cache" + self.blog_language + "_page_" + str(page) + "_search_" + search_term,
             context, cache_time)
         return context
 
@@ -133,7 +153,7 @@ class BlogView(ParentBlogView):
 
     def get_wp_api_kwargs(self, **kwargs):
         wp_api = super(BlogView, self).get_wp_api_kwargs(**kwargs)
-        wp_api['wp_filter'] = {'name': str(kwargs.get('slug'))}
+        wp_api['wp_filter'] = {'slug': str(kwargs.get('slug'))}
         return wp_api
 
     def get_context_data(self, **kwargs):
