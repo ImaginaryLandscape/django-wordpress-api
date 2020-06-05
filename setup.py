@@ -45,7 +45,7 @@ setup(
     install_requires=[
         'requests==2.21.0',
         'iso8601==0.1.12',
-        'six==1.12.0',
+        'six==1.14.0',
         'django>=1.11.20',
     ],
     license="MIT",
