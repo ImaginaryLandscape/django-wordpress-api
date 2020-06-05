@@ -17,7 +17,7 @@ except AttributeError:  # pragma: no cover
 
 class WPApiConnector(object):
 
-    def __init__(self, lang='en', auth=None, load_meta_data=True):
+    def __init__(self, lang='en', auth=None, load_meta_data=True, blog_per_page=blog_per_page):
         self.lang = lang
         self.wp_url = settings.WP_URL
         self.blog_per_page = blog_per_page
