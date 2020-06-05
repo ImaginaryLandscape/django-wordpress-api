@@ -20,4 +20,4 @@ def blogs_by_author(slug, number_of_posts):
 
     blogs = connector.get_posts(wp_filter=wp_filter)
 
-    return {'blogs': blogs['body']}
+    return blogs['body']
