@@ -104,6 +104,7 @@ class ParentBlogView(View):
             'search': search,
             'total_posts': int(blogs['headers']['X-WP-Total']),
             'total_pages': int(blogs['headers']['X-WP-TotalPages']),
+            'total_page_range': range(1, int(blogs['headers']['X-WP-TotalPages'])+1),
             'current_page': page,
             'previous_page': page - 1,
             'next_page': page + 1,
