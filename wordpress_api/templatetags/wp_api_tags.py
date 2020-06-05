@@ -1,3 +1,4 @@
+import iso8601
 from django import template
 from django.http import Http404
                                                                              
@@ -20,4 +21,33 @@ def blogs_by_author(slug, number_of_posts):
 
     blogs = connector.get_posts(wp_filter=wp_filter)
 
-    return {'blogs': blogs['body']}
+    # The below code, copied from the views, is needed to add additional data to the context objects.
+    # Should we split it out into a common function somehow to avoid repeating?
+    tags = connector.tags
+    categories = connector.categories
+
+    for blog in blogs['body']:
+        blog_categories = []
+        if 'categories' in blog:
+            for category in categories:
+                if category['id'] in blog['categories']:
+                    blog_categories.append(category)
+        blog['category_list'] = blog_categories
+        blog_tags = []
+        if 'tags' in blog:
+            for tag in tags:
+                if tag['id'] in blog['tags']:
+                    blog_tags.append(tag)
+        blog['tag_list'] = blog_tags
+        blog['slug'] = str(blog['slug'])
+        blog['bdate'] = iso8601.parse_date(blog['date']).date()
+        featured_media = blog.get(
+            '_embedded', {}).get('wp:featuredmedia', [])
+        authors = blog.get(
+            '_embedded', {}).get('author', [])
+        if featured_media:
+            blog['featured_image'] = featured_media[0]
+        if authors:
+            blog['authors'] = authors
+
+    return blogs['body']
