@@ -219,9 +219,9 @@ class BlogView(ParentBlogView):
                     authors = related_blog.get(
                         '_embedded', {}).get('author', [])
                     related_blog_tags = []
-                    if 'tags' in blog:
+                    if 'tags' in related_blog:
                         for tag in tags:
-                            if tag['id'] in blog['tags']:
+                            if tag['id'] in related_blog['tags']:
                                 related_blog_tags.append(tag)
                     related_blog['tag_list'] = related_blog_tags
                     if featured_media:
