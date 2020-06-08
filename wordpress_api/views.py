@@ -206,7 +206,7 @@ class BlogView(ParentBlogView):
                         kwargs.get('slug'), self.blog_language))
                 tag_query = ",".join([str(tag['id']) for tag in blog_tags])
                 related_blogs = self.connector.get_posts(
-                    wp_filter={'tag': tag_query},
+                    wp_filter={'tags': tag_query},
                     page_number=1,
                     orderby='date')['body'] if related_blogs is None else\
                     related_blogs
