@@ -52,7 +52,7 @@ class WPApiConnector(object):
             params['lang'] = self.lang
         try:
             response = requests.get(
-                query, params=params, timeout=30, auth=self.auth)
+                query, params=params, timeout=60, auth=self.auth)
         except (ConnectionError, Timeout):
             return {'server_error': 'The server is not reachable this moment\
                     please try again later'}
@@ -73,7 +73,7 @@ class WPApiConnector(object):
             page += 1
             params['page'] = page
             response = requests.get(
-                query, params=params, timeout=30, auth=self.auth)
+                query, params=params, timeout=60, auth=self.auth)
             data = response.json()
             for author in data:
                 authors[author['slug']] = author
@@ -123,7 +123,7 @@ class WPApiConnector(object):
             params['lang'] = self.lang
         try:
             response = requests.get(
-                query, params=params, timeout=30, auth=auth)
+                query, params=params, timeout=60, auth=auth)
         except (ConnectionError, Timeout):
             return {'server_error': 'The server is not reachable this moment\
                     please try again later'}
@@ -148,7 +148,7 @@ class WPApiConnector(object):
             params['lang'] = self.lang
         try:
             response = requests.get(
-                query, params=params, timeout=30, auth=self.auth)
+                query, params=params, timeout=60, auth=self.auth)
         except (ConnectionError, Timeout):
             return {'server_error': 'The server is not reachable this moment\
                     please try again later'}
@@ -167,7 +167,7 @@ class WPApiConnector(object):
             page += 1
             params['page'] = page
             response = requests.get(
-                query, params=params, timeout=30, auth=self.auth)
+                query, params=params, timeout=60, auth=self.auth)
             tags += response.json()
         cache.add(
             "blog_cache_tags_{}".format(self.lang),
@@ -186,7 +186,7 @@ class WPApiConnector(object):
             params['lang'] = self.lang
         try:
             response = requests.get(
-                query, params=params, timeout=30, auth=self.auth)
+                query, params=params, timeout=60, auth=self.auth)
         except (ConnectionError, Timeout):
             return {'server_error': 'The server is not reachable this moment\
                     please try again later'}
@@ -206,7 +206,7 @@ class WPApiConnector(object):
             page += 1
             params['page'] = page
             response = requests.get(
-                query, params=params, timeout=30, auth=self.auth)
+                query, params=params, timeout=60, auth=self.auth)
             categories += response.json()
         cache.add(
             "blog_cache_categories_{}".format(self.lang),
