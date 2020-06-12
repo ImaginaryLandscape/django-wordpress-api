@@ -17,7 +17,7 @@ def blogs_by_author(slug, number_of_posts):
     if slug in authors:
         wp_filter = {'author': authors[slug]['id']}
     else:
-        raise Http404
+        return
 
     blogs = connector.get_posts(wp_filter=wp_filter)
 
