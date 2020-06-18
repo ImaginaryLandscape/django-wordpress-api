@@ -1,12 +1,18 @@
 import iso8601
 from django import template
 from django.http import Http404
-                                                                             
+from django.conf import settings                                                                             
+from django.core.cache import cache
+
 from ..utils import WPApiConnector
 
 
 register = template.Library()                   
 
+try:
+    cache_time = settings.WP_API_BLOG_CACHE_TIMEOUT
+except AttributeError:
+    cache_time = 0
 
 @register.simple_tag
 def blogs_by_author(slug, number_of_posts):
@@ -19,7 +25,10 @@ def blogs_by_author(slug, number_of_posts):
     else:
         return
 
-    blogs = connector.get_posts(wp_filter=wp_filter)
+    blogs = cache.get("blog_author_more_context_" + slug)
+    blogs = connector.get_posts(wp_filter=wp_filter) if blogs is None else blogs
+    cache.add("blog_author_more_context_" + slug, blogs, cache_time)
+
 
     # The below code, copied from the views, is needed to add additional data to the context objects.
     # Should we split it out into a common function somehow to avoid repeating?
