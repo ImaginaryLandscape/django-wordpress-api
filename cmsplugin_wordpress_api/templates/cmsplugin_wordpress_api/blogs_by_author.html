@@ -1,0 +1,5 @@
+{% load wp_api_tags %}
+
+author: {{ instance.authors }}
+{% blogs_by_author slug=instance.authors number_of_posts=instance.number_to_display as blogs %}
+{% include "wordpress_api/_post_list.html" with layout=instance.layout %}
