@@ -51,7 +51,7 @@ def latest_blogs(number_of_posts):
 
     blogs = cache.get("blog_latest_blogs_context_count_" + str(number_of_posts))
     blogs = connector.get_posts() if blogs is None else blogs
-    cache.add("blog_latest_blogs_context__count_" + str(number_of_posts), blogs, cache_time)
+    cache.add("blog_latest_blogs_context_count_" + str(number_of_posts), blogs, cache_time)
 
     blogs = add_blog_context(connector, blogs)
 
