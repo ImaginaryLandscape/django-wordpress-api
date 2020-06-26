@@ -24,8 +24,17 @@ class LatestBlogs(BaseBlogList):
 class BlogsByAuthor(BaseBlogList):
     authors = models.TextField(blank=True)
 
+    def __str__(self):
+        return self.authors
+
 class BlogsByCategory(BaseBlogList):
     categories = models.TextField(blank=True)
 
+    def __str__(self):
+        return self.categories
+
 class BlogsByTag(BaseBlogList):
     tags = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.tags
