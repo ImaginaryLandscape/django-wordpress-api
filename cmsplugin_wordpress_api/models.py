@@ -22,10 +22,10 @@ class LatestBlogs(BaseBlogList):
     pass
 
 class BlogsByAuthor(BaseBlogList):
-    authors = models.TextField(blank=True, choices=get_authors())
+    authors = models.TextField(blank=True)
 
 class BlogsByCategory(BaseBlogList):
-    categories = models.TextField(blank=True, choices=get_categories())
+    categories = models.TextField(blank=True)
 
 class BlogsByTag(BaseBlogList):
-    tags = models.TextField(blank=True, choices=get_tags())
+    tags = models.TextField(blank=True)
