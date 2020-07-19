@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import url
 from . import views
-
+app_name = 'wordpress_api'
 urlpatterns = [
     url(r'^$', views.BlogListView.as_view(),
         name='wordpress_api_blog_list'),
