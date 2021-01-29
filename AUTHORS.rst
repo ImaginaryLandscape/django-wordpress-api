@@ -10,4 +10,6 @@ Development Lead
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Dave Bertrand Imaginary Landscape, LLC. <dbertrand@imagescape.com>
+
+* Scott Sharkey Imaginary Landscape, LLC. <ssharkey@imagescape.com>

@@ -19,7 +19,9 @@ Easily Install your Wordpress blog in your Django project
 
 This package  allows to communicate easily with any wordpress project that is using wordpress core >= 4.7.0.
 
-Even though the WP REST API package is already on the 2 version; it is still on beta so it was decided that this package will only support v1 until v2 is out of beta.
+This package now supports the WP REST API package version 2.
+
+This is a fork of the original package, done by Imaginary Landscape, LLC. to update dependencies and expand function.
 
 Documentation
 -------------
