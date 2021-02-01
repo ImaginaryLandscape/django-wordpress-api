@@ -8,16 +8,16 @@ try:
         DEBUG=True,
         USE_TZ=True,
         DATABASES={
-            "default": {
-                "ENGINE": "django.db.backends.sqlite3",
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
             }
         },
-        ROOT_URLCONF="wordpress.urls",
+        ROOT_URLCONF='wordpress_api.urls',
         INSTALLED_APPS=[
-            "django.contrib.auth",
-            "django.contrib.contenttypes",
-            "django.contrib.sites",
-            "wordpress_api",
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sites',
+            'wordpress_api',
         ],
         SITE_ID=1,
         MIDDLEWARE_CLASSES=(),
@@ -34,7 +34,7 @@ try:
 except ImportError:
     import traceback
     traceback.print_exc()
-    msg = "To fix this error, run: pip install -r requirements_test.txt"
+    msg = 'To fix this error, run: pip install -r requirements_test.txt'
     raise ImportError(msg)
 
 
